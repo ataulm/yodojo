@@ -1,6 +1,6 @@
 # DOJO
 
-Repo for coding katas and similar exercises (mostly from [CodingDojo][http://codingdojo.org/cgi-bin/wiki.pl?KataCatalogue]).
+Repo for coding katas and similar exercises (mostly from [CodingDojo][codingdojo]).
 
 ## Structure
 
@@ -30,5 +30,7 @@ The repository contains multiple projects and will adhere to the following struc
         }
     }
 
-[ataulm.co.uk][http://ataulm.co.uk]
+[ataulm.co.uk][mysite]
 
+[codingdojo]: http://codingdojo.org/cgi-bin/wiki.pl?KataCatalogue "Kata Catalogue - Coding Dojo"
+[mysite]: http://ataulm.co.uk "Ataul Munim - website"
