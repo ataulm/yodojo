@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
+
 
 
 /**
@@ -17,5 +19,65 @@ public class TennisScoreSystemShould {
     public void start_with_score_tied_at_love_all() {
         assertThat(scoreSystem.getScore(TennisScoreSystem.PLAYER_A), is(0));
         assertThat(scoreSystem.getScore(TennisScoreSystem.PLAYER_B), is(0));
+    }
+
+    @Test
+    public void increment_score_by_one_point_only() {
+        int prior = scoreSystem.getScore(TennisScoreSystem.PLAYER_A);
+        int post = scoreSystem.incrementScore(TennisScoreSystem.PLAYER_A);
+
+        assertThat(post - prior, is(1));
+    }
+
+    /**
+     * ASK: Should this be more exhaustive? Would one attempt have been enough to satisfy the test req?
+     */
+    @Test
+    public void start_with_specified_score_if_given() {
+        TennisScoreSystem scoreSystem = null;
+
+        scoreSystem = new TennisScoreSystem(0,0);
+        assertThat(scoreSystem.getScore(TennisScoreSystem.PLAYER_A), is(0));
+        assertThat(scoreSystem.getScore(TennisScoreSystem.PLAYER_B), is(0));
+
+        scoreSystem = new TennisScoreSystem(0,1);
+        assertThat(scoreSystem.getScore(TennisScoreSystem.PLAYER_A), is(0));
+        assertThat(scoreSystem.getScore(TennisScoreSystem.PLAYER_B), is(1));
+
+        scoreSystem = new TennisScoreSystem(3,1);
+        assertThat(scoreSystem.getScore(TennisScoreSystem.PLAYER_A), is(3));
+        assertThat(scoreSystem.getScore(TennisScoreSystem.PLAYER_B), is(1));
+    }
+
+    /**
+     * ASK: Can comparisons be tested using "assertThat" ?
+     */
+    @Test
+    public void ensure_score_is_not_initialised_with_finished_game_values() {
+        int tryScoreA = 3;
+        int tryScoreB = 6;
+        TennisScoreSystem scoreSystem = new TennisScoreSystem(tryScoreA, tryScoreB);
+
+        int scoreA = scoreSystem.getScore(TennisScoreSystem.PLAYER_A);
+        int scoreB = scoreSystem.getScore(TennisScoreSystem.PLAYER_B);
+
+        // If a score is over 3 (== FORTY), and greater by 2 or more, then game is already over
+        if (tryScoreA > 3 || tryScoreB > 3) assertTrue(Math.abs(scoreB - scoreA) < 2);
+    }
+
+    @Test
+    public void ensure_score_is_not_initialised_with_negative_values() {
+        TennisScoreSystem scoreSystem = new TennisScoreSystem(-1,1);
+
+        int scoreA = scoreSystem.getScore(TennisScoreSystem.PLAYER_A);
+        int scoreB = scoreSystem.getScore(TennisScoreSystem.PLAYER_B);
+
+        assertTrue(scoreA >= 0);
+        assertTrue(scoreB >= 0);
+    }
+
+    @Test
+    public void reset_score_when_game_is_over() {
+
     }
 }
